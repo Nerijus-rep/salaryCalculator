@@ -1,23 +1,25 @@
-var Salary = function (baseSalary) {
+var Salary = function (baseSalary, tax) {
   this.baseSalary = baseSalary;
-};
-
-Salary.prototype.calculateSalary = function() {
-  console.log("Mechaniko bazine alga yra " + this.baseSalary * professionMultipliers.mechanic +" €");
-  console.log("Programuotojo bazine alga yra " + this.baseSalary * professionMultipliers.developer +" €");
-  console.log("Daktaro bazine alga yra " + this.baseSalary * professionMultipliers.doctor +" €");
-  console.log("Profesoriaus bazine alga yra " + this.baseSalary * professionMultipliers.professor +" €");
-};
-
-var baseSalary = new Salary(800);
-
-var professionMultipliers = {
-  "mechanic": 2,
-  "developer": 3,
-  "doctor": 4,
-  "professor": 5,
+  this.tax = tax;
+  this.calculateSalary = function (profession) {
+    if (profession === "mechanic") {
+      this.multiplier = 1.8;
+    } else if (profession === "developer") {
+      this.multiplier = 2.8;
+    } else if (profession === "doctor") {
+      this.multiplier = 3.2;
+    } else if (profession === "professor") {
+      this.multiplier = 3.95;
+    }
+    return (profession) + " Salary is: " + (this.baseSalary * this.multiplier - (this.tax * this.baseSalary * this.multiplier) + ' €');
+  }
 }
 
-baseSalary.calculateSalary();
+var salaryCalculator = new Salary(800, 0.30);
 
-console.log(baseSalary instanceof Salary);
+var salary = salaryCalculator.calculateSalary("mechanic");
+var salary1 = salaryCalculator.calculateSalary("developer");
+var salary2 = salaryCalculator.calculateSalary("doctor");
+var salary3 = salaryCalculator.calculateSalary("professor");
+
+console.log(salary, "\n" + salary1, "\n" + salary2, "\n" + salary3);
